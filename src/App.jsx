@@ -92,24 +92,35 @@ function AppInner() {
 
   const shared = { games,events,players,messages,fb,showToast,syncStatus,isCoach,onNavigate:navigateTo,onBack:goBack,totalW,totalL,totalT };
 
-  if (page==="games")    return <><GamesPage    {...shared} {...pageProps}/><PasswordModal/><IdentityModal/><Toast message={toast}/></>;
-  if (page==="schedule") return <><SchedulePage {...shared} {...pageProps}/><PasswordModal/><IdentityModal/><Toast message={toast}/></>;
-  if (page==="roster")   return <><RosterPage   {...shared} {...pageProps}/><PasswordModal/><IdentityModal/><Toast message={toast}/></>;
-  if (page==="messages") return <><MessagesPage {...shared} {...pageProps}/><PasswordModal/><IdentityModal/><Toast message={toast}/></>;
-  if (page==="quizzes")  return <><QuizzesPage  {...shared} {...pageProps}/><PasswordModal/><IdentityModal/><Toast message={toast}/></>;
-  if (page==="beyond")   return <><BeyondPage   {...shared} {...pageProps}/><PasswordModal/><IdentityModal/><Toast message={toast}/></>;
+  const globalStyle = "*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}body{margin:0;background:#080808;}::-webkit-scrollbar{display:none;}button:active{opacity:0.75;transform:scale(0.97);}input[type='date'],input[type='time']{color-scheme:dark;}@media print{.no-print{display:none!important;}}";
+
+  // All pages rendered inside a consistent shell with NavBar always visible
+  const Shell = ({ children, activeTab }) => (
+    <div style={{ background:"#080808", maxWidth:430, margin:"0 auto", minHeight:"100vh" }}>
+      <style>{globalStyle}</style>
+      {children}
+      <div className="no-print">
+        <NavBar active={activeTab} onNavigate={navigateTab}/>
+      </div>
+      <PasswordModal/><IdentityModal/><Toast message={toast}/>
+    </div>
+  );
+
+  if (page==="games")    return <Shell activeTab="games">   <GamesPage    {...shared} {...pageProps}/></Shell>;
+  if (page==="schedule") return <Shell activeTab="schedule"><SchedulePage {...shared} {...pageProps}/></Shell>;
+  if (page==="roster")   return <Shell activeTab="roster">  <RosterPage   {...shared} {...pageProps}/></Shell>;
+  if (page==="messages") return <Shell activeTab="more">    <MessagesPage {...shared} {...pageProps}/></Shell>;
+  if (page==="quizzes")  return <Shell activeTab="more">    <QuizzesPage  {...shared} {...pageProps}/></Shell>;
+  if (page==="beyond")   return <Shell activeTab="more">    <BeyondPage   {...shared} {...pageProps}/></Shell>;
 
   return (
-    <div style={{ background:"#080808",maxWidth:430,margin:"0 auto",minHeight:"100vh" }}>
-      <style>{"*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}body{margin:0;background:#080808;}::-webkit-scrollbar{display:none;}button:active{opacity:0.75;transform:scale(0.97);}input[type='date'],input[type='time']{color-scheme:dark;}"}</style>
+    <Shell activeTab={tab}>
       {tab==="home"     && <HomeScreen onNavigate={navigateTo} games={games} events={events} messages={messages} totalW={totalW} totalL={totalL} totalT={totalT} syncStatus={syncStatus} isCoach={isCoach}/>}
       {tab==="games"    && <GamesPage    {...shared}/>}
       {tab==="schedule" && <SchedulePage {...shared}/>}
       {tab==="roster"   && <RosterPage   {...shared}/>}
       {tab==="more"     && <MoreScreen   onNavigate={navigateTo}/>}
-      <NavBar active={page||tab} onNavigate={navigateTab}/>
-      <PasswordModal/><IdentityModal/><Toast message={toast}/>
-    </div>
+    </Shell>
   );
 }
 
