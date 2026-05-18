@@ -18,9 +18,10 @@ function AppInner() {
   const [tab, setTab] = useState("home");
   const [page, setPage] = useState(null);
   const [pageProps, setPageProps] = useState({});
-  const [events, setEvents] = useState([]);
-  const [players, setPlayers] = useState([]);
-  const [messages, setMessages] = useState([]);
+  const [events, setEvents]       = useState([]);
+  const [players, setPlayers]     = useState([]);
+  const [messages, setMessages]   = useState([]);
+  const [dmMessages, setDmMessages] = useState({});
   const [syncStatus, setSyncStatus] = useState("connecting");
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState(null);
@@ -60,6 +61,19 @@ function AppInner() {
       setLoading(false);
     }, err);
     unsubs.push(unsubMsg);
+
+    // DM listener — watches all DM threads
+    const dmRef = ref(db, "id_dms");
+    const unsubDm = onValue(dmRef, snap => {
+      const val = snap.val() || {};
+      // val = { "nameA__nameB": { msgId: msg, ... }, ... }
+      const threads = {};
+      Object.entries(val).forEach(([threadKey, msgs]) => {
+        threads[threadKey] = Object.entries(msgs).reduce((acc,[id,msg])=>({...acc,[id]:{...msg,id}}),{});
+      });
+      setDmMessages(threads);
+    }, err);
+    unsubs.push(unsubDm);
     setTimeout(() => { setLoading(false); setSyncStatus("live"); }, 4000);
     return () => unsubs.forEach(u => u());
   }, []);
@@ -74,16 +88,20 @@ function AppInner() {
   }, [loading, players.length]);
 
   const fb = {
-    // Everything goes to id_events — games just have eventType:"game"
     setGame:       g   => set(ref(db, `id_events/${g.id}`), {...g, eventType:"game"}),
     deleteGame:    id  => remove(ref(db, `id_events/${id}`)),
     setEvent:      e   => set(ref(db, `id_events/${e.id}`), e),
     deleteEvent:   id  => remove(ref(db, `id_events/${id}`)),
     setPlayers:    p   => set(ref(db, "id_players"), p),
     setPlayer:     (idx, data) => { const u=[...players]; u[idx]={...u[idx],...data}; set(ref(db,"id_players"),u); },
+    // Group chat
     sendMessage:   msg => push(ref(db, "id_messages"), { ...msg, ts: Date.now() }),
     updateMessage: (id, data) => update(ref(db, `id_messages/${id}`), data),
     deleteMessage: id  => remove(ref(db, `id_messages/${id}`)),
+    // Direct messages
+    sendDm:        (threadKey, msg) => push(ref(db, `id_dms/${threadKey}`), { ...msg, ts: Date.now() }),
+    updateDm:      (threadKey, id, data) => update(ref(db, `id_dms/${threadKey}/${id}`), data),
+    deleteDm:      (threadKey, id) => remove(ref(db, `id_dms/${threadKey}/${id}`)),
   };
 
   // Derive games from the unified events array
@@ -102,7 +120,7 @@ function AppInner() {
     </div>
   );
 
-  const shared = { games, events, allEvents:events, players, messages, fb, showToast, syncStatus, isCoach, onNavigate:navigateTo, onBack:goBack, totalW, totalL, totalT };
+  const shared = { games, events, allEvents:events, players, messages, dmMessages, fb, showToast, syncStatus, isCoach, onNavigate:navigateTo, onBack:goBack, totalW, totalL, totalT };
 
   const globalStyle = "*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}body{margin:0;background:#080808;}::-webkit-scrollbar{display:none;}button:active{opacity:0.75;transform:scale(0.97);}input[type='date'],input[type='time']{color-scheme:dark;}@media print{.no-print{display:none!important;}}";
 
