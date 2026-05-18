@@ -18,7 +18,6 @@ function AppInner() {
   const [tab, setTab] = useState("home");
   const [page, setPage] = useState(null);
   const [pageProps, setPageProps] = useState({});
-  const [games, setGames] = useState([]);
   const [events, setEvents] = useState([]);
   const [players, setPlayers] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -48,7 +47,7 @@ function AppInner() {
       }, err);
       unsubs.push(u);
     };
-    listen("id_games",    setGames,    v => Object.values(v).sort((a,b)=>(a.date||"").localeCompare(b.date||"")));
+    // Everything lives in id_events now — games are eventType:"game"
     listen("id_events",   setEvents,   v => Object.values(v).sort((a,b)=>(a.date||"").localeCompare(b.date||"")));
     listen("id_players",  setPlayers,  v => Array.isArray(v) ? v : Object.values(v));
     listen("id_messages", setMessages, v => Object.values(v).sort((a,b)=>a.ts-b.ts));
@@ -66,8 +65,9 @@ function AppInner() {
   }, [loading, players.length]);
 
   const fb = {
-    setGame:       g   => set(ref(db, `id_games/${g.id}`), g),
-    deleteGame:    id  => remove(ref(db, `id_games/${id}`)),
+    // Everything goes to id_events — games just have eventType:"game"
+    setGame:       g   => set(ref(db, `id_events/${g.id}`), {...g, eventType:"game"}),
+    deleteGame:    id  => remove(ref(db, `id_events/${id}`)),
     setEvent:      e   => set(ref(db, `id_events/${e.id}`), e),
     deleteEvent:   id  => remove(ref(db, `id_events/${id}`)),
     setPlayers:    p   => set(ref(db, "id_players"), p),
@@ -76,6 +76,9 @@ function AppInner() {
     updateMessage: (id, data) => update(ref(db, `id_messages/${id}`), data),
     deleteMessage: id  => remove(ref(db, `id_messages/${id}`)),
   };
+
+  // Derive games from the unified events array
+  const games = events.filter(e => e.eventType === "game");
 
   const completedGames = games.filter(g => g.result);
   const totalW = completedGames.filter(g => g.result === "W").length;
@@ -90,7 +93,7 @@ function AppInner() {
     </div>
   );
 
-  const shared = { games,events,players,messages,fb,showToast,syncStatus,isCoach,onNavigate:navigateTo,onBack:goBack,totalW,totalL,totalT };
+  const shared = { games, events, allEvents:events, players, messages, fb, showToast, syncStatus, isCoach, onNavigate:navigateTo, onBack:goBack, totalW, totalL, totalT };
 
   const globalStyle = "*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}body{margin:0;background:#080808;}::-webkit-scrollbar{display:none;}button:active{opacity:0.75;transform:scale(0.97);}input[type='date'],input[type='time']{color-scheme:dark;}@media print{.no-print{display:none!important;}}";
 

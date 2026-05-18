@@ -59,7 +59,7 @@ function GameForm({form,onChange,showResult,title,onSave,onDelete,onCancel}) {
   );
 }
 
-export default function GamesPage({games,players,fb,showToast,isCoach,onBack}) {
+export default function GamesPage({games, allEvents, players, fb, showToast, isCoach, onBack, onNavigate}) {
   const {requireCoach} = useAuth();
   const [openId,setOpenId]           = useState(null);
   const [gameTab,setGameTab]         = useState("lineup");
