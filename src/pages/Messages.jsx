@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { T } fimport { useState, useEffect, useRef } from "react";
 import { T } from "../theme";
 import { useAuth } from "../AuthContext";
 import { S } from "../components/UI";
