@@ -50,7 +50,16 @@ function AppInner() {
     // Everything lives in id_events now — games are eventType:"game"
     listen("id_events",   setEvents,   v => Object.values(v).sort((a,b)=>(a.date||"").localeCompare(b.date||"")));
     listen("id_players",  setPlayers,  v => Array.isArray(v) ? v : Object.values(v));
-    listen("id_messages", setMessages, v => Object.values(v).sort((a,b)=>a.ts-b.ts));
+    // Messages need their Firebase key stored as id
+    const msgRef = ref(db, "id_messages");
+    const unsubMsg = onValue(msgRef, snap => {
+      const val = snap.val() || {};
+      const msgs = Object.entries(val).map(([key, msg]) => ({...msg, id:key})).sort((a,b)=>a.ts-b.ts);
+      setMessages(msgs);
+      setSyncStatus("live");
+      setLoading(false);
+    }, err);
+    unsubs.push(unsubMsg);
     setTimeout(() => { setLoading(false); setSyncStatus("live"); }, 4000);
     return () => unsubs.forEach(u => u());
   }, []);
