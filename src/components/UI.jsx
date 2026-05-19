@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { T } from "../theme";
-import { useAuth } from "../AuthContext";
+import { T } from "./theme";
+import { useAuth } from "./AuthContext";
 
 // ── Bottom Sheet Modal ────────────────────────────────────────────────
 export function Modal({ onClose, title, children, light = false }) {
@@ -140,23 +140,23 @@ export function EmptyState({ icon, title, sub, action, onAction }) {
 // ── Shared styles ─────────────────────────────────────────────────────
 export const S = {
   overlay: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.88)", display: "flex", alignItems: "flex-end", zIndex: 200, backdropFilter: "blur(4px)" },
-  sheet: { background: T.dark2, borderRadius: "22px 22px 0 0", width: "100%", maxHeight: "88vh", display: "flex", flexDirection: "column", border: `1px solid ${T.border}`, paddingBottom: 32 },
-  sheetTitle: { fontSize: 16, fontWeight: "bold", color: T.white, padding: "20px 20px 16px", fontFamily: T.serif },
+  sheet: { background: T.dark2, borderRadius: "22px 22px 0 0", width: "100%", maxHeight: "80dvh", display: "flex", flexDirection: "column", border: `1px solid ${T.border}`, paddingBottom: "max(24px, env(safe-area-inset-bottom))" },
+  sheetTitle: { fontSize: 16, fontWeight: "bold", color: T.white, padding: "20px 20px 16px", fontFamily: T.serif, borderBottom: `1px solid ${T.border}` },
   label: { fontSize: 11, color: T.dimText, letterSpacing: 1, textTransform: "uppercase" },
   input: { width: "100%", background: T.dark3, border: `1px solid ${T.dark4}`, borderRadius: 10, padding: "11px 14px", color: T.white, fontSize: 14, fontFamily: T.sans, outline: "none", boxSizing: "border-box" },
   textarea: { width: "100%", background: T.dark3, border: `1px solid ${T.dark4}`, borderRadius: 10, padding: "11px 14px", color: T.white, fontSize: 14, fontFamily: T.sans, outline: "none", boxSizing: "border-box", resize: "none" },
   formField: { marginBottom: 14 },
-  btnPrimary: { width: "100%", padding: 14, background: `linear-gradient(135deg, ${T.red}, #8a1010)`, border: "none", borderRadius: 12, color: T.white, fontSize: 14, fontWeight: "bold", cursor: "pointer", fontFamily: T.serif, letterSpacing: 0.5 },
-  btnGold: { width: "100%", padding: 14, background: `linear-gradient(135deg, ${T.gold}, #8a6a00)`, border: "none", borderRadius: 12, color: T.white, fontSize: 14, fontWeight: "bold", cursor: "pointer", fontFamily: T.serif },
+  btnPrimary: { width: "100%", padding: 14, background: `linear-gradient(135deg, ${T.red}, #8a1010)`, border: "none", borderRadius: 12, color: T.white, fontSize: 15, fontWeight: "bold", cursor: "pointer", fontFamily: T.serif, letterSpacing: 0.5 },
+  btnGold: { width: "100%", padding: 14, background: `linear-gradient(135deg, ${T.gold}, #8a6a00)`, border: "none", borderRadius: 12, color: T.white, fontSize: 15, fontWeight: "bold", cursor: "pointer", fontFamily: T.serif },
   btnSecondary: { width: "100%", padding: 12, background: T.dark3, border: `1px solid ${T.dark4}`, borderRadius: 12, color: T.dimText, fontSize: 13, cursor: "pointer", fontFamily: T.sans },
-  btnClose: { margin: "10px 20px 0", padding: 12, background: "none", border: `1px solid ${T.dark4}`, borderRadius: 12, color: T.silverDim, fontSize: 13, cursor: "pointer", fontFamily: T.sans, width: "calc(100% - 40px)" },
+  btnClose: { margin: "10px 20px 0", padding: 13, background: "none", border: `1px solid ${T.dark4}`, borderRadius: 12, color: T.silverDim, fontSize: 14, cursor: "pointer", fontFamily: T.sans, width: "calc(100% - 40px)", display: "block" },
   backBtn: { background: "none", border: "none", color: T.gold, fontSize: 15, cursor: "pointer", fontFamily: T.serif, fontWeight: "bold", padding: "4px 0" },
   sectionLabel: { fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: T.silverDim, padding: "14px 16px 6px" },
   emptyState: { textAlign: "center", padding: "60px 24px 40px" },
   emptyIcon: { fontSize: 48, marginBottom: 14 },
   emptyTitle: { fontSize: 18, fontWeight: "bold", color: T.silver, fontFamily: T.serif, marginBottom: 8 },
   emptySub: { fontSize: 13, color: T.silverDim, marginBottom: 24, lineHeight: 1.6 },
-  toast: { position: "fixed", bottom: 90, left: "50%", transform: "translateX(-50%)", background: `linear-gradient(135deg, ${T.red}, #8a1010)`, color: T.white, padding: "9px 22px", borderRadius: 22, fontSize: 13, zIndex: 300, whiteSpace: "nowrap", boxShadow: "0 4px 20px rgba(0,0,0,0.5)" },
+  toast: { position: "fixed", bottom: "max(90px, calc(80px + env(safe-area-inset-bottom)))", left: "50%", transform: "translateX(-50%)", background: `linear-gradient(135deg, ${T.red}, #8a1010)`, color: T.white, padding: "9px 22px", borderRadius: 22, fontSize: 13, zIndex: 300, whiteSpace: "nowrap", boxShadow: "0 4px 20px rgba(0,0,0,0.5)" },
   toggleRow: { display: "flex", gap: 6, flexWrap: "wrap" },
   toggle: { padding: "7px 14px", background: T.dark3, border: `1px solid ${T.dark4}`, borderRadius: 20, color: T.silver, fontSize: 12, cursor: "pointer", fontFamily: T.sans },
   toggleActive: { background: T.red, border: `1px solid ${T.red}`, color: T.white },

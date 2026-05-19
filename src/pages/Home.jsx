@@ -115,11 +115,13 @@ export default function HomeScreen({ onNavigate, games = [], events = [], messag
           </div>
         </div>
         <div style={styles.headerRight}>
-          <div style={{ width: 8, height: 8, borderRadius: "50%", background: syncStatus === "live" ? T.greenLight : syncStatus === "offline" ? T.red : T.amber }} />
-          {isCoach
-            ? <button style={styles.coachBtn} onClick={logoutCoach}>🔓 Coach</button>
-            : <button style={styles.loginBtn} onClick={() => setShowPasswordModal(true)}>🔒 Login</button>
-          }
+          <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+            <div style={{ width:8, height:8, borderRadius:"50%", background: syncStatus==="live" ? T.greenLight : syncStatus==="offline" ? T.red : T.amber, flexShrink:0 }}/>
+            {isCoach
+              ? <button style={styles.coachBtn} onClick={logoutCoach}>🔓 Coach</button>
+              : <button style={styles.loginBtn} onClick={() => setShowPasswordModal(true)}>🔒 Login</button>
+            }
+          </div>
         </div>
       </div>
 
@@ -174,15 +176,15 @@ export default function HomeScreen({ onNavigate, games = [], events = [], messag
 }
 
 const styles = {
-  root: { background: T.black, minHeight: "100vh", paddingBottom: 80 },
-  header: { background: `linear-gradient(160deg, #1a1a1a 0%, #0d0d0d 100%)`, padding: "14px 14px 14px", display: "flex", alignItems: "center", gap: 10, borderBottom: `1px solid ${T.borderRed}` },
-  logoBox: { width: 52, height: 52, borderRadius: 14, background: T.dark2, border: `1.5px solid ${T.borderGold}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden", fontSize: 24 },
-  teamName: { fontSize: 16, fontWeight: "bold", color: T.white, fontFamily: T.serif, letterSpacing: 0.5 },
-  teamSub: { fontSize: 9, color: T.mutedText, letterSpacing: 2, textTransform: "uppercase", marginTop: 1 },
-  record: { fontSize: 14, fontWeight: "bold", marginTop: 3, fontFamily: T.serif },
-  headerRight: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5 },
-  coachBtn: { background: "rgba(76,175,80,0.15)", border: "1px solid rgba(76,175,80,0.3)", borderRadius: 10, color: T.greenLight, padding: "3px 9px", fontSize: 10, cursor: "pointer", fontFamily: T.sans },
-  loginBtn: { background: T.redGlow, border: `1px solid ${T.borderRed}`, borderRadius: 10, color: T.silverDim, padding: "3px 9px", fontSize: 10, cursor: "pointer", fontFamily: T.sans },
+  root: { background: T.black, minHeight: "100dvh", paddingBottom: 100 },
+  header: { background: `linear-gradient(160deg, #1a1a1a 0%, #0d0d0d 100%)`, padding: "12px 14px", display: "flex", alignItems: "center", gap: 10, borderBottom: `1px solid ${T.borderRed}` },
+  logoBox: { width: 48, height: 48, borderRadius: 12, background: T.dark2, border: `1.5px solid ${T.borderGold}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden", fontSize: 22 },
+  teamName: { fontSize: 15, fontWeight: "bold", color: T.white, fontFamily: T.serif, letterSpacing: 0.5 },
+  teamSub: { fontSize: 9, color: T.mutedText, letterSpacing: 1.5, textTransform: "uppercase", marginTop: 1 },
+  record: { fontSize: 13, fontWeight: "bold", marginTop: 2, fontFamily: T.serif },
+  headerRight: { display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 },
+  coachBtn: { background: "rgba(76,175,80,0.15)", border: "1px solid rgba(76,175,80,0.3)", borderRadius: 14, color: T.greenLight, padding: "6px 12px", fontSize: 11, cursor: "pointer", fontFamily: T.sans, fontWeight: "bold", minHeight: 32 },
+  loginBtn: { background: T.redGlow, border: `1px solid ${T.borderRed}`, borderRadius: 14, color: T.silver, padding: "6px 12px", fontSize: 11, cursor: "pointer", fontFamily: T.sans, minHeight: 32 },
   nextCard: { background: `linear-gradient(135deg, #1a0808, #100404)`, border: `1px solid ${T.borderRed}`, borderRadius: 16, padding: "11px 14px", marginBottom: 6, cursor: "pointer" },
   nextTop: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 },
   nextEyebrow: { fontSize: 9, color: T.mutedText, letterSpacing: 2, textTransform: "uppercase", fontFamily: T.sans },
@@ -193,10 +195,10 @@ const styles = {
   secondTitle: { fontSize: 11, fontWeight: "bold", color: T.white, fontFamily: T.sans },
   secondMeta: { fontSize: 9, color: T.mutedText, fontFamily: T.sans, marginTop: 1 },
   tileGrid: { padding: "0 10px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 },
-  tile: { borderRadius: 18, padding: "13px 13px 11px", position: "relative", overflow: "hidden", cursor: "pointer", minHeight: 100, display: "flex", flexDirection: "column", justifyContent: "space-between" },
-  tileWide: { gridColumn: "span 2", minHeight: 64, padding: "13px 16px" },
+  tile: { borderRadius: 18, padding: "13px 13px 11px", position: "relative", overflow: "hidden", cursor: "pointer", minHeight: 95, display: "flex", flexDirection: "column", justifyContent: "space-between" },
+  tileWide: { gridColumn: "span 2", minHeight: 62, padding: "12px 16px" },
   tileWideInner: { display: "flex", alignItems: "center", gap: 12, width: "100%" },
-  tileIcon: { fontSize: 22, lineHeight: 1, marginBottom: 6 },
+  tileIcon: { fontSize: 22, lineHeight: 1, marginBottom: 5 },
   tileLabel: { fontSize: 12, fontWeight: "bold", color: T.white, fontFamily: T.sans, letterSpacing: 0.2 },
   tileSub: { fontSize: 9, color: T.dimText, marginTop: 2, fontFamily: T.sans, lineHeight: 1.35 },
   tileArrow: { fontSize: 18, color: T.mutedText, flexShrink: 0 },
