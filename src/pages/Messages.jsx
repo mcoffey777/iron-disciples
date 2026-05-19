@@ -638,9 +638,9 @@ const M = {
   pollCloseBtn:{ background:"none", border:`1px solid ${T.border}`, borderRadius:8, color:T.silverDim, padding:"4px 10px", fontSize:10, cursor:"pointer", marginTop:6, width:"100%", textAlign:"center" },
 
   // Input
-  optBar:{ background:T.dark2, borderTop:`1px solid ${T.borderGold}`, padding:"10px 12px", display:"flex", gap:8, flexWrap:"wrap", position:"fixed", bottom:128, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:430, zIndex:150 },
-  optItem:{ background:T.dark3, border:`1px solid ${T.borderGold}`, borderRadius:20, color:T.goldLight, padding:"9px 16px", fontSize:13, cursor:"pointer", fontWeight:"bold" },
-  inputBar:{ position:"fixed", bottom:64, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:430, background:"rgba(10,10,10,0.97)", borderTop:`1px solid ${T.border}`, padding:"10px", display:"flex", alignItems:"center", gap:8, backdropFilter:"blur(20px)", zIndex:100 },
+  optBar:{ background:T.dark2, borderTop:`1px solid ${T.borderGold}`, padding:"10px 12px", display:"flex", gap:8, flexWrap:"wrap", position:"fixed", bottom:"calc(56px + max(56px, calc(56px + env(safe-area-inset-bottom))))", left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:430, zIndex:150 },
+  optItem:{ background:T.dark3, border:`1px solid ${T.borderGold}`, borderRadius:20, color:T.goldLight, padding:"10px 18px", fontSize:14, cursor:"pointer", fontWeight:"bold" },
+  inputBar:{ position:"fixed", bottom:"max(56px, calc(56px + env(safe-area-inset-bottom)))", left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:430, background:"rgba(10,10,10,0.97)", borderTop:`1px solid ${T.border}`, padding:"10px 12px", display:"flex", alignItems:"center", gap:8, backdropFilter:"blur(20px)", zIndex:100 },
   optBtn:{ width:36, height:36, borderRadius:"50%", border:`1px solid ${T.borderGold}`, fontSize:20, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, transition:"all 0.2s" },
   textInput:{ flex:1, background:T.dark2, border:`1px solid ${T.dark3}`, borderRadius:24, padding:"9px 16px", color:T.white, fontSize:14, outline:"none" },
   sendBtn:{ width:38, height:38, borderRadius:"50%", background:`linear-gradient(135deg,${T.red},#8a1010)`, border:"none", color:T.white, fontSize:16, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 },

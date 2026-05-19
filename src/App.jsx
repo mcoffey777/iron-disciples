@@ -122,7 +122,7 @@ function AppInner() {
 
   const shared = { games, events, allEvents:events, players, messages, dmMessages, fb, showToast, syncStatus, isCoach, onNavigate:navigateTo, onBack:goBack, totalW, totalL, totalT };
 
-  const globalStyle = "*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}body{margin:0;background:#080808;}::-webkit-scrollbar{display:none;}button:active{opacity:0.75;transform:scale(0.97);}input[type='date'],input[type='time']{color-scheme:dark;}@media print{.no-print{display:none!important;}}";
+  const globalStyle = "@keyframes spin{to{transform:rotate(360deg)}}";
 
   // All pages rendered inside a consistent shell with NavBar always visible
   const Shell = ({ children, activeTab }) => (

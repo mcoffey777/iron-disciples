@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="apple-mobile-web-app-title" content="Iron Disciples"/>
+    <meta name="theme-color" content="#080808"/>
+    <title>Iron Disciples</title>
+    <style>
+      :root {
+        --sat: env(safe-area-inset-top, 44px);
+        --sab: env(safe-area-inset-bottom, 20px);
+        --sal: env(safe-area-inset-left, 0px);
+        --sar: env(safe-area-inset-right, 0px);
+      }
+      * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: #080808;
+        overscroll-behavior: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      #root {
+        padding-top: var(--sat);
+        padding-bottom: var(--sab);
+        min-height: 100dvh;
+      }
+      ::-webkit-scrollbar { display: none; }
+      button:active { opacity: 0.75; transform: scale(0.97); }
+      input[type="date"], input[type="time"] { color-scheme: dark; }
+      @media print {
+        .no-print { display: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
