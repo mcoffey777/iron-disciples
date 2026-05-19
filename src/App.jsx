@@ -126,9 +126,25 @@ function AppInner() {
 
   // All pages rendered inside a consistent shell with NavBar always visible
   const Shell = ({ children, activeTab }) => (
-    <div style={{ background:"#080808", maxWidth:430, margin:"0 auto", minHeight:"100vh" }}>
+    <div style={{ background:"#080808", maxWidth:430, margin:"0 auto", height:"100dvh", display:"flex", flexDirection:"column", overflow:"hidden" }}>
       <style>{globalStyle}</style>
-      {children}
+      <div style={{ flex:1, overflowY:"auto", overflowX:"hidden" }}>
+        {children}
+      </div>
+      <div className="no-print">
+        <NavBar active={activeTab} onNavigate={navigateTab}/>
+      </div>
+      <PasswordModal/><IdentityModal/><Toast message={toast}/>
+    </div>
+  );
+
+  // Chat needs its own layout — fills space between header and nav bar
+  const ChatShell = ({ children, activeTab }) => (
+    <div style={{ background:"#080808", maxWidth:430, margin:"0 auto", height:"100dvh", display:"flex", flexDirection:"column", overflow:"hidden" }}>
+      <style>{globalStyle}</style>
+      <div style={{ flex:1, display:"flex", flexDirection:"column", overflow:"hidden" }}>
+        {children}
+      </div>
       <div className="no-print">
         <NavBar active={activeTab} onNavigate={navigateTab}/>
       </div>
@@ -139,7 +155,7 @@ function AppInner() {
   if (page==="games")    return <Shell activeTab="games">   <GamesPage    {...shared} {...pageProps}/></Shell>;
   if (page==="schedule") return <Shell activeTab="schedule"><SchedulePage {...shared} {...pageProps}/></Shell>;
   if (page==="roster")   return <Shell activeTab="roster">  <RosterPage   {...shared} {...pageProps}/></Shell>;
-  if (page==="messages") return <Shell activeTab="more">    <MessagesPage {...shared} {...pageProps}/></Shell>;
+  if (page==="messages") return <ChatShell activeTab="more"><MessagesPage {...shared} {...pageProps}/></ChatShell>;
   if (page==="quizzes")  return <Shell activeTab="more">    <QuizzesPage  {...shared} {...pageProps}/></Shell>;
   if (page==="beyond")   return <Shell activeTab="more">    <BeyondPage   {...shared} {...pageProps}/></Shell>;
 

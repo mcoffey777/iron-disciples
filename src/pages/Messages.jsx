@@ -598,16 +598,16 @@ const M = {
   newDmBtn:{ background:`linear-gradient(135deg,${T.red},#8a1010)`, border:"none", borderRadius:16, color:T.white, padding:"6px 14px", fontSize:11, fontWeight:"bold", cursor:"pointer", fontFamily:T.serif },
 
   // Chat view
-  chatRoot:{ background:T.black, minHeight:"100vh", display:"flex", flexDirection:"column" },
-  chatHeader:{ background:`linear-gradient(160deg,#1a1010,${T.black})`, padding:"14px 16px", display:"flex", alignItems:"center", gap:10, borderBottom:`1px solid ${T.border}` },
+  chatRoot:{ background:T.black, height:"100dvh", display:"flex", flexDirection:"column", overflow:"hidden" },
+  chatHeader:{ background:`linear-gradient(160deg,#1a1010,${T.black})`, padding:"14px 16px", display:"flex", alignItems:"center", gap:10, borderBottom:`1px solid ${T.border}`, flexShrink:0 },
   backBtn:{ background:"none", border:"none", color:T.gold, fontSize:15, cursor:"pointer", fontFamily:T.serif, fontWeight:"bold", flexShrink:0, padding:"4px 0" },
   chatTitle:{ fontSize:16, fontWeight:"bold", color:T.white, fontFamily:T.serif },
   chatSub:{ fontSize:10, color:T.silverDim, marginTop:2 },
   pinnedBanner:{ background:`linear-gradient(135deg,#14100a,#0e0900)`, borderBottom:`1px solid ${T.borderGold}`, padding:"7px 14px", display:"flex", alignItems:"center", gap:8 },
   pinnedLabel:{ fontSize:14, flexShrink:0 },
   pinnedText:{ fontSize:11, color:T.dimText, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" },
-  msgList:{ flex:1, overflowY:"auto", padding:"12px 10px 140px", display:"flex", flexDirection:"column", gap:10 },
-  empty:{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"60px 20px", textAlign:"center" },
+  msgList:{ flex:1, overflowY:"auto", padding:"12px 10px 12px", display:"flex", flexDirection:"column", gap:10 },
+  empty:{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"40px 20px", textAlign:"center" },
   dateLine:{ textAlign:"center", fontSize:10, color:T.silverDim, padding:"8px 0", letterSpacing:1 },
 
   // Bubbles
@@ -638,9 +638,9 @@ const M = {
   pollCloseBtn:{ background:"none", border:`1px solid ${T.border}`, borderRadius:8, color:T.silverDim, padding:"4px 10px", fontSize:10, cursor:"pointer", marginTop:6, width:"100%", textAlign:"center" },
 
   // Input
-  optBar:{ background:T.dark2, borderTop:`1px solid ${T.borderGold}`, padding:"10px 12px", display:"flex", gap:8, flexWrap:"wrap", position:"fixed", bottom:"calc(56px + max(56px, calc(56px + env(safe-area-inset-bottom))))", left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:430, zIndex:150 },
+  optBar:{ background:T.dark2, borderTop:`1px solid ${T.borderGold}`, padding:"10px 12px", display:"flex", gap:8, flexWrap:"wrap", flexShrink:0 },
   optItem:{ background:T.dark3, border:`1px solid ${T.borderGold}`, borderRadius:20, color:T.goldLight, padding:"10px 18px", fontSize:14, cursor:"pointer", fontWeight:"bold" },
-  inputBar:{ position:"fixed", bottom:"max(56px, calc(56px + env(safe-area-inset-bottom)))", left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:430, background:"rgba(10,10,10,0.97)", borderTop:`1px solid ${T.border}`, padding:"10px 12px", display:"flex", alignItems:"center", gap:8, backdropFilter:"blur(20px)", zIndex:100 },
+  inputBar:{ flexShrink:0, background:"rgba(10,10,10,0.97)", borderTop:`1px solid ${T.border}`, padding:"10px 12px", display:"flex", alignItems:"center", gap:8, paddingBottom:"max(10px, env(safe-area-inset-bottom))" },
   optBtn:{ width:36, height:36, borderRadius:"50%", border:`1px solid ${T.borderGold}`, fontSize:20, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, transition:"all 0.2s" },
   textInput:{ flex:1, background:T.dark2, border:`1px solid ${T.dark3}`, borderRadius:24, padding:"9px 16px", color:T.white, fontSize:14, outline:"none" },
   sendBtn:{ width:38, height:38, borderRadius:"50%", background:`linear-gradient(135deg,${T.red},#8a1010)`, border:"none", color:T.white, fontSize:16, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 },
