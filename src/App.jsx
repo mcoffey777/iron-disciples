@@ -22,6 +22,7 @@ function AppInner() {
   const [players, setPlayers]     = useState([]);
   const [messages, setMessages]   = useState([]);
   const [dmMessages, setDmMessages] = useState({});
+  const [quizScores, setQuizScores] = useState({});
   const [syncStatus, setSyncStatus] = useState("connecting");
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState(null);
@@ -74,6 +75,14 @@ function AppInner() {
       setDmMessages(threads);
     }, err);
     unsubs.push(unsubDm);
+
+    // Quiz scores listener
+    const qsRef = ref(db, "id_quizscores");
+    const unsubQs = onValue(qsRef, snap => {
+      setQuizScores(snap.val() || {});
+    }, err);
+    unsubs.push(unsubQs);
+
     setTimeout(() => { setLoading(false); setSyncStatus("live"); }, 4000);
     return () => unsubs.forEach(u => u());
   }, []);
@@ -102,6 +111,8 @@ function AppInner() {
     sendDm:        (threadKey, msg) => push(ref(db, `id_dms/${threadKey}`), { ...msg, ts: Date.now() }),
     updateDm:      (threadKey, id, data) => update(ref(db, `id_dms/${threadKey}/${id}`), data),
     deleteDm:      (threadKey, id) => remove(ref(db, `id_dms/${threadKey}/${id}`)),
+    // Quiz scores
+    saveQuizScore: entry => push(ref(db, "id_quizscores"), entry),
   };
 
   // Derive games from the unified events array
@@ -120,7 +131,7 @@ function AppInner() {
     </div>
   );
 
-  const shared = { games, events, allEvents:events, players, messages, dmMessages, fb, showToast, syncStatus, isCoach, onNavigate:navigateTo, onBack:goBack, totalW, totalL, totalT };
+  const shared = { games, events, allEvents:events, players, messages, dmMessages, scores:quizScores, fb, showToast, syncStatus, isCoach, onNavigate:navigateTo, onBack:goBack, totalW, totalL, totalT };
 
   const globalStyle = "@keyframes spin{to{transform:rotate(360deg)}}";
 
@@ -156,7 +167,7 @@ function AppInner() {
   if (page==="schedule") return <Shell activeTab="schedule"><SchedulePage {...shared} {...pageProps}/></Shell>;
   if (page==="roster")   return <Shell activeTab="roster">  <RosterPage   {...shared} {...pageProps}/></Shell>;
   if (page==="messages") return <ChatShell activeTab="more"><MessagesPage {...shared} {...pageProps}/></ChatShell>;
-  if (page==="quizzes")  return <Shell activeTab="more">    <QuizzesPage  {...shared} {...pageProps}/></Shell>;
+  if (page==="quizzes")  return <ChatShell activeTab="more"><QuizzesPage  {...shared} {...pageProps}/></ChatShell>;
   if (page==="beyond")   return <Shell activeTab="more">    <BeyondPage   {...shared} {...pageProps}/></Shell>;
 
   return (
